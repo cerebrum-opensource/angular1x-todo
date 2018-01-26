@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<body ng-app="testApp" ng-controller="control">
+<div style="" align="center">
+<h2>Todo List</h2>
+
+<form ng-submit="todoAdd()">
+    <input type="text" ng-model="inputtext" size="50" class="" placeholder="Enter New List">
+    <input type="submit" value="Submit" class="btn btn-secondary">
+</form>
+
+<br>
+
+<div ng-repeat="x in listing">
+    <input type="checkbox" ng-model="x.done"> <span ng-bind="x.todoText"></span>
+
+</div>
+    <p><button ng-click="remove()" class="btn btn-primary">Remove Selected</button></p>
+
+</div>
+<script>
+var main = angular.module('testApp', []); 
+main.controller('control', function($scope) {
+    $scope.listing = [];
+
+    $scope.todoAdd = function() {
+        $scope.listing.push({todoText:$scope.inputtext, done:false});
+        $scope.inputtext = "";
+    };
+
+    $scope.remove = function() {
+        var perviouslist = $scope.listing;
+        $scope.listing = [];
+        angular.forEach(perviouslist, function(x) {
+            if (!x.done) $scope.listing.push(x);
+        });
+    };
+});
+</script>
+
+</body>
+</html>
